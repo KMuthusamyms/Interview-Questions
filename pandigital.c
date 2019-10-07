@@ -5,7 +5,6 @@ The first few pandigital base 10 numbers are given by (sequence A050278 in the O
 
 Code:
 #include<stdio.h>
-#include<limits.h>
 int main()
 {
 	short int check = 0;
