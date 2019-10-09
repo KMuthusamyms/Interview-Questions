@@ -1,0 +1,145 @@
+1.Print the powers of 2 until 10000
+Code:
+#include<stdio.h>
+int main()
+{
+    int num ;
+    for(num = 1 ; num <= 10000 ; num++)
+          if((num&(num-1)) == 0) // 8 = 1000 7 = 0111 => 8&7==0 so 8 is a power of 2
+             printf("%d " ,num);
+	return 0;
+}
+
+2.check whether  kth bit is set or not
+Code:
+#include<stdio.h>
+int main()
+{
+	int num,k;
+	scanf("%d%d",&num,&k);
+	if(num & (1 << k-1))
+		printf("SET");
+	else
+		printf("NOT SET");
+	return 0;
+}
+
+3.Set kth bit of a number
+Code:
+#include<stdio.h>
+int main()
+{
+	int num,k;
+	scanf("%d%d",&num,&k);
+	num = num | ( 1 << k-1 );
+	printf("%d",num);
+	return 0;
+}
+
+4.clear kth bit of a number
+Code: // If it is not zero then it will be made zero otherwise do nothing 
+#include<stdio.h>
+int main()
+{
+	int num,k;
+	scanf("%d%d",&num,&k);
+	if( num & ( 1 << k-1 ))
+	{
+		num = num ^ ( 1 << k-1 );
+		printf("Updated number = %d",num);
+	}
+	else
+		printf("Kth bit is already zero");
+	return 0;
+}
+
+5.Toggle kth bit of a number
+Code:
+#include<stdio.h>
+int main()
+{
+	int num,k;
+	scanf("%d%d",&num,&k);
+	if( num & ( 1 << k-1 ))
+		num = num ^ ( 1 << k-1 );
+	else
+		num = num | ( 1 << k-1);
+	printf("%d",num);
+	return 0;
+}
+
+6.Count number of set bits in a number
+Code:
+#include<stdio.h>
+int main()
+{
+	int num,count=0,check=1;
+	scanf("%d",&num);
+	for(;check<=num;)
+	{
+		if(num & check)
+			count+=1;
+		check = check << 1;
+	}
+	printf("%d set bits",count);
+	return 0;
+}
+
+7.check whether given number is a power of 2
+Code:
+#include<stdio.h>
+int main()
+{
+	int num;
+	scanf("%d",&num);
+	if( (num & (num-1)) == 0 )
+		printf("%d is power of 2",num);
+	else 
+		printf("%d is not a power of 2",num);
+	return 0;
+}
+
+8.Find the next higher number which is a power of 2
+Code:
+#include<stdio.h>
+int main()
+{
+	int num,next=1;
+	scanf("%d",&num);
+	while(next<=num)
+		next=next<<1;
+	printf("%d",next);
+	return 0;
+}
+
+9.Check whether given number is a power of 4
+Code:
+#include<stdio.h>
+int main()
+{
+	int num,count=0,check=1;
+	scanf("%d",&num);
+	while(check<num)
+	{
+		if((check & num)==0)
+			count+=1;
+		check = check << 1;
+	}
+	if((num&(num-1))==0 && count%2==0)
+		printf("%d is a power of 4",num);
+	else
+		printf("%d is not a power of 4",num);
+	return 0;
+}
+
+10.Multiply a number with 7 without using multiplication
+Code:
+#include<stdio.h>
+int main()
+{
+	int num;
+	scanf("%d",&num);
+	num = (num << 3) - num; // 7*3 => (2^3 - 1)*3 => (2^3 * 3 - 3) => ( 3 << 3 - 3 ) becuase multiply by 2 = one left shift so multiply by 2^3 = 3 left shift
+	printf("%d",num);
+	return 0;
+}
