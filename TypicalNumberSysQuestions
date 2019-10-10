@@ -1,0 +1,81 @@
+// Swapping the digits of a number
+Assumption the digits to be swapped must be unique in the number
+#include<stdio.h>
+int main()
+{
+	int number, d1, d2, d1pow, d2pow, power=1, digit;
+	scanf("%d",&number);
+	scanf("%d%d",&d1,&d2);
+	while( number / power )
+	{
+		digit = ( number / power ) % 10;
+		if( digit == d1 )
+			d1pow = power;
+		if( digit == d2 )
+			d2pow = power;
+		power = power * 10;
+	}
+	number = number - ( d1 * d1pow + d2 * d2pow );
+	number = number + d1 * d2pow + d2 * d1pow;
+	printf("After Swapping : %d",number);
+	return 0;
+}
+
+// Replacing the digits of a number
+#include<stdio.h>
+int main()
+{
+	int number, olddig, newdig, power, digit;
+	scanf("%d",&number);
+	scanf("%d%d",&olddig,&newdig);
+	power = 1;
+	while( number / power )
+	{
+		digit = ( number / power ) % 10;
+		if( digit == olddig )
+		{
+			number = number - olddig * power;
+			number = number + newdig * power;
+		}
+		power = power * 10;
+	}
+	printf("After Replacement : %d", number);
+	return 0;
+}
+
+//Form largest number from the given array of numbers
+I/P : 99 9 56 67 909 34 22 2 97 98 55 54 69
+O/P : 9999897909696756555434222
+#include<stdio.h>
+int power(int num)
+{
+	int power = 1;
+	while( num / power )
+		power = power * 10;
+	return power;
+}
+int main()
+{
+	int num, *arr, temp, ind, flag, n1, n2;
+	scanf("%d",&num);
+	arr=(int*)malloc(sizeof(int)*num);
+	for(ind=0;ind<num;ind++)
+		scanf("%d",&arr[ind]);
+	do
+	{
+		for( ind = 0, flag = 0 ; ind < num-1 ; ind++ )
+		{
+			n1 = ( arr[ind] * power( arr[ind+1] )) + arr[ind+1];
+			n2 = ( arr[ind+1] * power( arr[ind] )) + arr[ind];
+			if( n1 < n2 )
+			{
+				flag = 1;
+				temp = arr[ind];
+				arr[ind] = arr[ind+1];
+				arr[ind+1] = temp;
+			}
+		}
+	} while( flag != 0);
+	for( ind = 0 ; ind < num ; printf("%d", arr[ind++]));
+	return 0;
+}
