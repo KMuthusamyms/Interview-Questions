@@ -1,0 +1,316 @@
+// My way sum of digits
+#include<stdio.h>
+int main()
+{
+	int num,rem,sum=0;
+	scanf("%d",&num);
+	while(num!=0)
+	{
+		rem=num%10;
+		sum=sum+rem;
+		num=num/10;
+	}
+	printf("%d",sum);
+	return 0;
+}
+
+//Digitization for sum of digits
+#include<stdio.h>
+int main()
+{
+	int num,power=1,sod=0,digit;
+	scanf("%d",&num);
+	while((num/power)!=0)
+	{
+		digit = (num / power) % 10;
+		sod = sod + digit;
+		power = power * 10;
+	}
+	printf("%d",sod);
+	return 0;
+}
+The advantage with the latter method is we need not modify the value of n and in the former we always 
+modify the value of n by reducing it by 10 everytime.
+
+//Array Rotations
+Works fine for any number of rotations
+#include<stdio.h>
+void reverse(int* arr,int start,int end)
+{
+	int temp;
+	for(;start<end;temp=arr[start],arr[start++]=arr[end],arr[end--]=temp);
+}
+int main()
+{
+	int num,*arr,ind,NOR;
+	scanf("%d",&num);
+	arr=(int*)malloc(sizeof(int)*num);
+	for(ind=0;ind<num;ind++)
+		scanf("%d",&arr[ind]);
+	scanf("%d",&NOR);
+	NOR=NOR%num;
+	reverse(arr,0,num-1);
+	reverse(arr,0,NOR-1);
+	reverse(arr,NOR,num-1);
+	for(ind=0;ind<num;ind++)
+		printf("%d ",arr[ind]);
+	return 0;	
+}
+
+//Whether a number is prime or not
+#include<stdio.h>
+int main()
+{
+	int num, ind, flag=0;
+	scanf("%d",&num);
+	for( ind = 2 ; ind*ind <= num ; ind++ )
+		if( num % ind == 0)
+		{
+			flag = 1;
+			break;
+		}
+	flag == 1 ? printf("%d is not a prime number",num) : printf("%d is a prime number",num) ;
+	return 0;
+}
+
+//Print first n prime numbers or in given range
+Sieve of Eratosthenes-works for larger numbers
+#include<stdio.h>
+int main()
+{
+	int num, ind, *prime, ind2;
+	scanf("%d",&num);
+	prime=(int*)calloc(sizeof(int),num);
+	for(ind=2;ind<num;prime[ind++]=1);
+	for(ind=2;ind*ind<=num;ind++)
+	{
+		for(ind2=ind+1;ind2<num;ind2++)
+		{
+			if(prime[ind2]!=0 && ind2%ind==0)
+				prime[ind2]=0;
+		}
+	}
+	for(ind=2;ind<num;ind++)
+		if(prime[ind]==1)
+			printf("%d ",ind);
+	return 0;
+}
+
+// Find sum of multiples of a number upto n
+Apply summation of first n natural numbers taking number of multiples as common
+The basic idea is to iterate from i = a to i = n, i++ and check whether i % a == 0 or not.
+If zero then add i to sum(initially sum = 0).Thus we will get the sum.It will take O(n) time.
+We can modify the loop as i = a, i <= n, i = i + a to reduce the number of iterations.
+But it will also take O(m) time if there is m multiples of a.
+To get the result in O(1) time we can use the formula of summation of n natural numbers.For the above example,
+a = 4 and N = 23, number of multiples of a, m = N/a(integer division). The multiples are 4, 8, 12, 16, 20.
+We can write it as 4 X [1, 2, 3, 4, 5]. So we can get the sum of multiples as:
+ sum = a * (Summation of 1 to m [natural numbers from 1 to m]) 
+ sum = 4 * (m*(m+1) / 2)
+ sum = 4 * (5*6 / 2) = 4 * 15 = 60 
+Important topic might get a question in interview
+Code:
+#include<stdio.h>
+int main()
+{
+	int n, sum;
+	scanf("%d",&n);
+	sum = 4 * ( ( n / 4 ) * ( n / 4 + 1) ) / 2;
+	printf("%d",sum);
+	return 0;
+}
+
+// Find sum of multiples of 3 and 5 upto n
+Same as set theory some might be in the intersection part so we need to subtract number which are both multiples of 5 and 3
+Code:
+#include<stdio.h>
+int main()
+{
+	int N, sum;
+	scanf("%d",&N);
+	sum = 3 * ( ( N / 3 ) * ( N / 3 + 1 )) / 2 + 5 * ( ( N / 5 ) * ( N / 5 + 1 )) / 2 - 15 * ( ( N / 15 ) * ( N / 15 + 1 )) / 2;
+	printf("%d",sum);
+	return 0;
+}
+
+// Print factors of a given number
+Code:
+#include<stdio.h>
+int main()
+{
+	int num, ind;
+	scanf("%d", &num);
+	printf("%d %d ",1,num);
+	for( ind = 2 ; ind * ind <= num ; ind++ )
+	{
+		if( num % ind == 0 )
+		{
+			if( ind == num / ind )
+				printf("%d ",ind);
+			else
+				printf("%d %d ",ind,num/ind);
+		}
+	}
+	return 0;
+}
+
+//Sum of factors of a given number 
+Code:
+#include<stdio.h>
+int main()
+{
+	int num, ind, sum;
+	scanf("%d",&num);
+	sum = 1 + num;
+	for( ind = 2 ; ind * ind <= num ; ind++ )
+	{
+		if( num % ind == 0 )
+		{
+			if( ind == num / ind )	// for 16, in case of 4 it has duplicate factors
+				sum = sum + ind;
+			else	// No duplicate factors
+				sum = sum + ind + num / ind;
+		}
+	}
+	printf("%d",sum);
+	return 0;
+}
+
+//Perfect number
+Code:
+#include<stdio.h>
+int main()
+{
+	int num, sum, ind;
+	scanf("%d",&num);
+	sum = 1+num;
+	for( ind = 2 ; ind * ind <= num ; ind++ )
+	{
+		if( num % ind == 0 )
+		{
+			if( ind == num / ind )
+				sum = sum + ind;
+			else
+				sum = sum + ind + num / ind; 
+		}
+	}
+	sum == num*2 ? printf("PERFECT NUMBER") : printf("NOT A PERFECT NUMBER");
+	return 0;
+}
+
+//GCD using looping
+#include<stdio.h>
+int main()
+{
+	int num1, num2, temp;
+	scanf("%d%d",&num1,&num2);
+	temp = num1 % num2;
+	while( temp != 0 )
+	{
+		num1 = num2;
+		num2 = temp;
+		temp = num1 % num2;
+	}
+	printf("GCD = %d",num2);
+	return 0;
+}
+//using recursion - recommended
+#include<stdio.h>
+int gcd(int a,int b)
+{
+	if(a==0)
+		return b;
+	return gcd(b%a,a);
+}
+int main()
+{
+	printf("%d",gcd(10,15));
+	return 0;
+}
+// calculating gcd for an array
+#include<stdio.h>
+int gcd(int a,int b)
+{
+	if(a==0)
+		return b;
+	return gcd(b%a,a);
+}
+int findGCD(int *arr,int num)
+{
+	int result = arr[0],ind;
+	for( ind = 1 ; ind < num ; ind++ )
+		result = gcd(arr[ind],result);
+	return result;
+}
+int main()
+{
+	int arr[] = {2,4,6,8,16};
+	int num = sizeof arr / sizeof arr[0];
+	printf("%d",findGCD(arr,num));
+	return 0;
+}
+
+//LCM of two numbers
+#include <stdio.h> 
+int gcd(int a, int b) 
+{ 
+	if (a == 0) 
+		return b; 
+	return gcd(b % a, a); 
+} 
+int lcm(int a, int b) 
+{ 
+	return (a*b)/gcd(a, b); 
+} 
+int main() 
+{ 
+	int a = 15, b = 20; 
+	printf("LCM of %d and %d is %d ", a, b, lcm(a, b)); 
+	return 0; 
+} 
+//LCM of array
+int gcd(int a, int b) 
+{ 
+	if (b == 0) 
+		return a; 
+	return gcd(b, a % b); 
+} 
+ll findlcm(int arr[], int n) 
+{ 
+	ll ans = arr[0]; 
+	for (int i = 1; i < n; i++) 
+		ans = (((arr[i] * ans)) / 
+				(gcd(arr[i], ans))); 
+	return ans; 
+} 
+int main() 
+{ 
+	int arr[] = { 2, 7, 3, 9, 4 }; 
+	int n = sizeof(arr) / sizeof(arr[0]); 
+	printf("%lld", findlcm(arr, n)); 
+	return 0; 
+} 
+
+// Prime Factorization printing prime factors of a number
+#include<stdio.h>
+int main()
+{
+	int num, ind;
+	scanf("%d",&num);
+	while( num % 2 == 0 )
+	{
+		printf("2 ");
+		num = num / 2;
+	}
+	for( ind = 3 ; ind * ind <= num ; ind+=2 )
+	{
+		while( num % ind == 0 )
+		{
+			printf("%d ",ind);
+			num = num / ind;
+		}
+	}
+	if(num>2)
+		printf("%d",num);
+	return 0;
+}
