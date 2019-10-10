@@ -314,3 +314,27 @@ int main()
 		printf("%d",num);
 	return 0;
 }
+
+//Whether a number is a perfect square or not
+#include<stdio.h>
+int main()
+{
+	int num, count = 0, ind;
+	scanf("%d",&num);
+	while(num % 2 == 0)
+	{
+		count+=1;
+		num = num / 2;
+	}
+	for( ind = 3 ; count%2 == 0 && num != 1 ; ind+=2 )
+	{
+		count = 0;
+		while( num % ind == 0 )
+		{
+			count+=1;
+			num = num / ind;
+		}
+	}
+	num == 1 && count%2 == 0 ? printf("PERFECT SQUARE") : printf("NOT A PERFECT SQUARE");
+	return 0;
+}
