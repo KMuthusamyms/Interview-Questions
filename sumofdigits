@@ -31,3 +31,28 @@ int main()
 }
 The advantage with the latter method is we need not modify the value of n and in the former we always 
 modify the value of n by reducing it by 10 everytime.
+
+//Array Rotations
+Works fine for any number of rotations
+#include<stdio.h>
+void reverse(int* arr,int start,int end)
+{
+	int temp;
+	for(;start<end;temp=arr[start],arr[start++]=arr[end],arr[end--]=temp);
+}
+int main()
+{
+	int num,*arr,ind,NOR;
+	scanf("%d",&num);
+	arr=(int*)malloc(sizeof(int)*num);
+	for(ind=0;ind<num;ind++)
+		scanf("%d",&arr[ind]);
+	scanf("%d",&NOR);
+	NOR=NOR%num;
+	reverse(arr,0,num-1);
+	reverse(arr,0,NOR-1);
+	reverse(arr,NOR,num-1);
+	for(ind=0;ind<num;ind++)
+		printf("%d ",arr[ind]);
+	return 0;	
+}
