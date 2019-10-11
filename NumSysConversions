@@ -1,0 +1,138 @@
+Decimal to Binary and Binary to Decimal
+Below program can take a decimal number and convert to binary and then take the binary and produce the original number 
+Code:
+#include<stdio.h>
+int main()
+{
+	int number, digit, power2, power10;
+	long int value = 0;
+	scanf("%d",&number);
+	power2 = power10 = 1;
+	while( number / power2 )
+	{
+		digit = ( number / power2 ) % 2;
+		value = digit * power10 + value;
+		power2 = power2 * 2;
+		power10 = power10 * 10;
+	}
+	printf("Binary : %ld", value);
+	power2 = power10 = 1;
+	number = 0;
+	while( value / power10 )
+	{
+		digit = ( value / power10 ) % 10;
+		number = digit * power2 + number;
+		power2 = power2 * 2;
+		power10 = power10 * 10;
+	}
+	printf("\nNumber : %d", number);
+	return 0;
+}
+
+From decimal to any base which is less than 10 and
+from any base less than 10 to decimal
+This program converts any base to decimal and decimal to any base
+Code:
+#include<stdio.h>
+int main()
+{
+	long int number, newnum, powerSR, powerDE;
+	int digit, sour, dest;
+	scanf("%ld", &number);
+	scanf("%d%d", &sour, &dest);
+	powerSR = powerDE = 1;
+	newnum = 0;
+	while( number / powerDE )
+	{
+		digit = ( number / powerDE ) % dest;
+		newnum = digit * powerSR + newnum;
+		powerSR = powerSR * sour;
+		powerDE = powerDE * dest;
+	}
+	printf("%ld", newnum);
+	return 0;
+}
+
+For all base conversion less than 10
+This program converts any base to any base but the limitation is the base must be <= 10
+Code:
+#include<stdio.h>
+int main()
+{
+	long int number, powerSR, powerDE, power10, newnum;
+	int digit, sour, dest;
+	scanf("%ld",&number);
+	scanf("%d%d", &sour, &dest);
+	powerSR = powerDE = power10 = 1;
+	newnum = 0;
+	while( number / power10 )
+	{
+		digit = ( number / power10 ) % 10;
+		newnum = digit * powerSR + newnum;
+		powerSR = powerSR * sour;
+		power10 = power10 * 10;
+	}
+	number = newnum;
+	newnum = 0;
+	power10 = 1;
+	while( number / powerDE )
+	{
+		digit = ( number / powerDE ) % dest;
+		newnum = digit * power10 + newnum;
+		power10 = power10 * 10;
+		powerDE = powerDE * dest;
+	}
+	printf("%ld",newnum);
+	return 0;
+}
+
+Decimal to Hexadecimal conversion without using extra array
+Code:
+#include<stdio.h>
+int main()
+{
+	long int number, power16;
+	int digit;
+	scanf("%d",&number);
+	power16 = 1;
+	while( number / power16 )
+		power16 = power16 * 16;
+	power16 = power16 / 16;
+	while( power16 )
+	{
+		digit = ( number / power16 ) % 16;
+		if( digit <= 9 )
+			printf("%d", digit);
+		else
+			printf("%c", 'A'+digit-10);
+		power16 = power16 / 16;
+	}
+	return 0;
+}
+
+Hexadecimal to Decimal conversion
+Code:
+#include<stdio.h>
+#define MAX 100
+int main()
+{
+	char hexa[MAX];
+	long int number, power16;
+	int digit, len, index;
+	scanf("%s",hexa);
+	power16 = 1;
+	number = 0;
+	for( len = 0 ; hexa[len] ; len++ );
+	for( index = len - 1 ; index >= 0 ; index-- )
+	{
+		if( hexa[index] <= '9' )
+			number = number + power16 * ( hexa[index] - '0' );
+		else
+			number = number + power16 * ( hexa[index] - 'A' + 10 );
+		power16 = power16 * 16;
+	}
+	printf("Decimal Equivalent = %ld", number);
+	return 0;
+}
+
+
