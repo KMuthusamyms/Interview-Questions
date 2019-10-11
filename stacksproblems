@@ -1,0 +1,74 @@
+// Stock span problem
+Code:
+#include<stdio.h>
+#define MAX 100
+int stack[MAX],top=-1;
+void push(int x)
+{
+	stack[++top] = x;
+}
+void pop()
+{
+	top = top - 1;
+}
+int main()
+{
+	int num, *prices, *span, ind;
+	scanf("%d",&num);
+	prices=(int*)malloc(sizeof(int)*num);
+	span=(int*)malloc(sizeof(int)*num);
+	for(ind=0;ind<num;ind++)
+		scanf("%d",&prices[ind]);
+	span[0] = 1;
+	push(0);
+	for( ind = 1 ; ind < num ; ind++ )
+	{
+		while( top != -1 && prices[stack[top]] <= prices[ind] )
+			pop();
+		span[ind] = ( top == -1 ) ? ind+1 : ind - stack[top];
+		push(ind);
+	}
+	for(ind=0;ind<num;ind++)
+		printf("%d ",span[ind]);
+	return 0;
+}
+Time Complexity : As every index is pushed and popped atmost once therefore the
+time complexity is O(n)
+
+// Next greater element
+Code:
+#include<stdio.h>
+#define MAX 100
+int stack[MAX], top = -1;
+void push(int x)
+{
+	stack[++top] = x;
+}
+void pop()
+{
+	top = top - 1;
+}
+int main()
+{
+	int num, *array, *greater, index;
+	scanf("%d",&num);
+	array=(int*)malloc(sizeof(int)*num);
+	greater=(int*)malloc(sizeof(int)*num);
+	for(index=0;index<num;index++)
+		scanf("%d",&array[index]);
+	greater[num-1] = -1;
+	push(num-1);
+	for( index = num-2 ; index >= 0 ;index-- )
+	{
+		while( top != -1 && array[index] > array[stack[top]] )
+			pop();
+		greater[index] = ( top == -1 ) ? -1 : array[stack[top]];
+		push(index);
+	}
+	for(index=0;index<num;index++)
+		printf("%d ",greater[index]);
+	return 0;
+}
+Time Complexity : As every index is pushed and popped atmost once therefore the
+time complexity is O(n)
+
