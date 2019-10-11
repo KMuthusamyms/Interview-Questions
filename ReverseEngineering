@@ -1,0 +1,37 @@
+// Reverse Engineering is a concept in which we break the object into smaller objects as per our need and after completion
+// of the work we again reconstruct the original object in exactly the opposite way in which we destroyed it.
+// this phenomena is known as Reverse Engineering
+#include<stdio.h>
+int main()
+{
+	int number, digit, value, power;
+	scanf("%d", &number);
+	power = 1;
+	value = 0;
+	while( number / power )
+	{
+		digit = ( number / power ) % 10;
+		value = digit * power + value;
+		power = power * 10; 
+	}
+	printf("Reverse Engineering : %d",value);
+	return 0;
+}
+
+// Digitization
+#include<stdio.h>
+int main()
+{
+	int number, digit, value, power;
+	scanf("%d", &number);
+	power = 1;
+	value = 0;
+	while( number / power )
+	{
+		digit = ( number / power ) % 10;
+		value = value * power + digit;
+		power = power * 10; 
+	}
+	printf("Digitization Demo : %d",value);
+	return 0;
+}
