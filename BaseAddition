@@ -1,0 +1,30 @@
+Given two binary numbers add the two numbers in binary form without converting them to decimal value.
+eg) a = 1010 b = 11001
+      o/p  100011	            
+  b.The two numbers were given in base n 
+	eg) a = 123  b = 13  n = 4
+	      o/p  202
+Code:
+#include<stdio.h>
+int main()
+{
+	long long int number1, number2, power10, result;
+	int digit1, digit2, carry, sum;
+	scanf("%lld%lld", &number1, &number2);
+	power10 = 1;
+	carry = 0;
+	sum = 0;
+	result = 0;
+	while( number1 / power10 || number2 / power10 )
+	{
+		digit1 = ( number1 / power10 ) % 10;
+		digit2 = ( number2 / power10 ) % 10;
+		sum = ( digit1 + digit2 + carry ) % 2;
+		carry = ( digit1 + digit2 + carry ) / 2;
+		result = sum * power10 + result;
+		power10 = power10 * 10;
+	}
+	result = carry != 0 ? carry * power10 + result : result;
+	printf("SUM :  %lld", result);
+	return 0;
+}
