@@ -12,8 +12,7 @@ Input          Output
  705            AAC
  
  Code:
- #include<stdio.h>
-#include<string.h>
+#include<stdio.h>
 #define MAX 5
 void reverse( char* string, int start, int end )
 {
