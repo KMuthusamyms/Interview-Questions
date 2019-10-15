@@ -28,3 +28,32 @@ int main()
 	printf("SUM :  %lld", result);
 	return 0;
 }
+
+Generalized base addition : 
+I/P :
+11110
+10
+2
+O/P : ( 11110 + 10 ) base 2 = 100000
+Code:
+#include<stdio.h>
+int main()
+{
+	long long int number1, number2, result, power10;
+	int digit1, digit2, base, sum, carry;
+	scanf("%lld%lld%d", &number1, &number2, &base);
+	sum = carry = result = 0;
+	power10 = 1;
+	while( number1 / power10 || number2 / power10 )
+	{
+		digit1 = ( number1 / power10 ) % 10;
+		digit2 = ( number2 / power10 ) % 10;
+		sum = ( digit1 + digit2 + carry ) % base;
+		carry = ( digit1 + digit2 + carry ) / base;
+		result = sum * power10 + result;
+		power10 = power10 * 10;
+	}
+	result = carry != 0 ? carry * power10 + result : result;
+	printf("( %lld + %lld ) base %d   =   %lld", number1, number2, base, result);
+	return 0;
+}
