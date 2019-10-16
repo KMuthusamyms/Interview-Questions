@@ -5,7 +5,7 @@ We may assume that we have infinite supply of notes of values {2000, 500, 200, 1
 
 Code:
 #include<stdio.h>
-int currency[] = { 2000,500,200,100,50,20,5,1 };
+int currency[] = { 2000,500,200,100,50,20,10,5,1 };
 int main()
 {
 	int amount, notes, ind=0;
