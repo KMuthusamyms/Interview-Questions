@@ -25,6 +25,20 @@ without actually knowing that it has been computed long back. But what DP does i
 again we store the results of the sub problems in a table and when ever we call a subproblem we refer table if the solution is already
 computed else we compute the solution and tabularize it for future use.This is how DP reduces the time complexity.
 
+In order to apply DP we need two things:
+1.Optimal Sub structure
+2.Overlapping sub problems
+
+Optimal Sub Structure : 
+	Given a problem, we should be able to write this problem in terms of smaller problems in such a way that the solutions to these
+smaller problems put together to make up the solution to the big problem
+
+Overlapping Sub Problems :
+	While solving a problem we come across a sub problem and that sub problem should be a part of another problem as well, then they
+are known as overlapping sub problems
+If there are no overlapping sub problems it is as good as applying divide and conquer where we divide the problem into sub problems
+and compute them and when they are put together we get the solution to the original problem.
+
 Example-1:
 nth Fibonacci number :
 Code:
@@ -71,3 +85,39 @@ int main()
 	printf("%lld Fibonacci number is : %lld", number, fibonacci(DP,number));
 	return 0;
 }
+
+1.Matrix Chain Multiplication : DP solution
+If we have a chain of matrices, the way in which we paranthesize them is going to have a significant impact on the number of
+multiplications required and it is always important to keep this number as little as possible.
+[A](p x q) [B](q x r) = > [AB](p x r)
+Number of scalar multiplications required = ( p x r ) x q
+Every element of one row of [A] has to be multiplied with every element of one column of [B] Since the number of rows in [A] =
+number of colimns in [B] = q 
+Therefore scalar multiplications = ( p x r ) x q
+Note : Given k matrices, the number of ways in which we can paranthesize k matrices is given by the formula (2n)!/((n+1)!*n!)
+where n = k-1
+
+For example A,B,C are three matrices number of ways = 2 => A(BC) and (AB)C
+For example A,B,C,D are four matrices number of ways = 5 => A((BC)D),A(B(CD)),(AB)(CD),((AB)C)D,(A(BC))D 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
