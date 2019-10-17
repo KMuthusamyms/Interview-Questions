@@ -100,6 +100,55 @@ where n = k-1
 For example A,B,C are three matrices number of ways = 2 => A(BC) and (AB)C
 For example A,B,C,D are four matrices number of ways = 5 => A((BC)D),A(B(CD)),(AB)(CD),((AB)C)D,(A(BC))D 
 
+Ai order is pi-1 x pi
+
+Optimal Sub structure:
+Ai Ai+1 Ai+2 ------ Aj = ( Ai Ai+1 Ai+2 --- Ak ) ( Ak+1 Ak+2 --- Aj ) + pi-1 pk pj
+where i <= k < j
+we can split anywhere Ai | Ai+1 | Ai+2 | ----- | Aj
+
+Recursive Equations:
+	     |	0 ; if i == j
+m[i,j] =  ---|  	  
+	     |  min{ m[i,k] + m[k+1,j] + pi-1 pk pj } ; i <= k < j
+	     
+Time Complexity : O(n^3)
+Space Complexity : O(n^2)
+Code	:	(DP Solution)
+#include<stdio.h>
+#include<limits.h>
+int Matrix_Chain(int *order,int n)
+{
+	int Matrix[n+1][n+1], i, j, k, l, muls;
+	for( i = 1 ; i <= n ; i++ )
+		Matrix[i][i] = 0;
+	for( i = 2 ; i <= n ; i++ )
+	{
+		for( j = 1 ; j<= n - i + 1 ; j++ )
+		{
+			k = j + i - 1;
+			Matrix[j][k] = INT_MAX;
+			for( l = j ; l < k ; l++ )
+			{
+				muls = Matrix[j][l] + Matrix[l+1][k] + order[j-1]*order[l]*order[k];
+				if( muls < Matrix[j][k] )
+					Matrix[j][k] = muls;
+			}
+		}
+	}
+	return Matrix[1][n];
+}
+int main()
+{
+	int number, *order, ind, scalar_muls;
+	scanf("%d", &number);
+	order=(int*)malloc(sizeof(int)*(number+1));
+	for(ind=0;ind<=number;ind++)
+		scanf("%d", &order[ind]);
+	scalar_muls = Matrix_Chain(order,number);
+	printf("Scalar Multiplications : %d",scalar_muls);
+	return 0;
+}
 
 
 
