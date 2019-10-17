@@ -2,7 +2,7 @@ A) Alternate sorting: Given an array of integers, rearrange the array in such a 
 
     Eg.) Input  : {1, 2, 3, 4, 5, 6, 7}
          Output : {7, 1, 6, 2, 5, 3, 4} 
-
+"Only for Sorted array"
 Code:
 (i)with extra space
 #include<stdio.h>
