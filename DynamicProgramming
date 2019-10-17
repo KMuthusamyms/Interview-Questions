@@ -1,0 +1,73 @@
+Optimization :
+  Minimizing or Maximizing a property is known as optimization
+Optimization Problem :
+  The problems which involve maximizing a particular property or minimizing a particular property are known as optimization problems.
+Examples:Minimize cost, maximize profit, maximize reliability, minimize risk.
+When you apply exhaustive enumeration for optimization problems then the time complexity goes to exponential in most of the cases
+Therefore in order to handle optimization problems there are two programming paradigms.They are:
+1.Greedy
+2.Dynamic programming
+Greedy can solve only a subset of optimization problems and inorder to apply greedy then the problem has to have specific properties and
+therefore it can't be applied to all optimization problems
+Dynamic programming can solve any optimization problem but for some set of problems the time complexity might get down to polynomial
+whereas for other set of problems the time complexity remains exponential therefore for such kind of problems applying DP is as good
+as applying exhaustive search.
+Therefore before solving the problem using DP, we should find whether there is a scope to get the complexity down to polynomial and then
+we go for DP and if there is no scope to get the time complexity down, it would be better we apply Exhaustive enumeration.
+
+Dynamic programming:
+  Programming does not mean we are writing some program or it is related to programing language. programming means we are going to make
+a table and we are dynamically going to decide whether to call a function or use the table and this is what is meant by dynamic 
+programming. Greedy is fine but dynamic programming is much similar to divide and conquer. In divide and conquer we divide a problem into
+smaller problems, compute the solutions to smaller problems and merge the solutions to get the solution to the original problem.
+But if the problem contains overlapping sub problems then divide and conquer ends up solving the same sub problem over and again 
+without actually knowing that it has been computed long back. But what DP does is instead of solving the same sub problem over and
+again we store the results of the sub problems in a table and when ever we call a subproblem we refer table if the solution is already
+computed else we compute the solution and tabularize it for future use.This is how DP reduces the time complexity.
+
+Example-1:
+nth Fibonacci number :
+Code:
+#include<stdio.h>
+long long int fibonacci(int n)
+{
+	if( n == 1 )
+		return 0;
+	else if( n == 2 )
+		return 1;
+	return fibonacci( n - 1 )+fibonacci( n - 2 );
+}
+int main()
+{
+	long long int number;
+	scanf("%lld", &number);
+	printf("%lld Fibonacci number is : %lld", number, fibonacci(number));
+	return 0;
+}
+
+Dynamic Programming Solution: Really Nice and it works fine
+Code:
+#include<stdio.h>
+#include<stdlib.h>
+long long int fibonacci(long long int *DP,long long int n)
+{
+	if( n == 1 )
+		return 0;
+	else if( n == 2 )
+		return 1;
+	else
+	{
+		if( DP[ n - 3 ] )
+			return DP[ n - 3 ];
+		DP[ n - 3 ] = fibonacci(DP,n-1)+fibonacci(DP,n-2);
+		return DP[n-3];
+	}
+}
+int main()
+{
+	long long int number, *DP;
+	scanf("%lld", &number);
+	DP=(long long int*)calloc(sizeof(long long int),number);
+	printf("%lld Fibonacci number is : %lld", number, fibonacci(DP,number));
+	return 0;
+}
