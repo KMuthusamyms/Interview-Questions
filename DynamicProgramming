@@ -199,6 +199,48 @@ int main()
 	return 0;
 }
 
+3.0/1 Knapsack Problem 	:	DP solution
+Greedy knapsack fails in 0/1 knapsack problem where we can either include an object or leave it.
+Optimal Substructure and Recursive equations :
+ith object => profit pi, weight wi
+capacity W
+				|   max( pi + KS(i-1,W-wi), KS(i-1,W) ) ; if wi <= W
+		KS(i,W) = ------|   0 ; if i == 0 or W == 0
+				|   KS(i-1,W) ; if wi > W
+
+Overlapping Sub problems : It turns out that the depth of the recursion tree is O(n+W) and the number of sub problems will be in the
+order of O(2^(n+W)) which is exponential the number of unique sub problems is n*W.
+
+Time Complexity = min( O(2^n),O(n*W) )
+Space Complexity = O(n*W)
+
+Code:
+#include<stdio.h>
+int Knap01(int *w,int *p,int n,int W)
+{
+	int Matrix[n+1][W+1], ind1, ind2;
+	for( ind1 = 0 ; ind1 <= W ; Matrix[0][ind1++] = 0 );
+	for( ind1 = 1 ; ind1 <= n ; Matrix[ind1++][0] = 0 );
+	for( ind1 = 1 ; ind1 <= n ; ind1++ )
+		for( ind2 = 1 ; ind2 <= W ; ind2++ )
+			if( w[ind1] <= ind2 )
+				Matrix[ind1][ind2] = p[ind1] + Matrix[ind1-1][ind2-w[ind1]] > Matrix[ind1-1][ind2] ? p[ind1] + Matrix[ind1-1][ind2-w[ind1]] : Matrix[ind1-1][W] ;
+			else
+				Matrix[ind1][ind2] = Matrix[ind1-1][ind2];
+	return Matrix[n][W];				
+}
+int main()
+{
+	int number, *weight, *profit, index, Max_profit, Capacity;
+	scanf("%d%d", &number, &Capacity);
+	weight = (int*)malloc(sizeof(int)*(number+1));
+	profit = (int*)malloc(sizeof(int)*(number+1));
+	for( index = 1 ; index <= number ; index++ )
+		scanf("%d%d", &weight[index], &profit[index]);
+	Max_profit = Knap01(weight,profit,number,Capacity);
+	printf("MAXIMUM PROFIT MADE BY 0/1 KNAPSACK IS : %d", Max_profit);
+	return 0;
+}
 
 
 
