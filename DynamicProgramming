@@ -242,8 +242,46 @@ int main()
 	return 0;
 }
 
+4.Subset Sum problem 	: 	DP solution
+It is very much similar to 0/1 Knapsack problem
+Optimal Substructure AND Recursive equations :
 
+			  |	0	; 	i == 0 and S != 0
+	SS(i,S) =  -------|	1	;	S == 0
+			  |	SS(i-1,S-ai) || SS(i-1,S) ; ai <= S
+			  |	SS(i-1,S)	; ai > S
+Time Complexity : min( O(2^n) , O(n*S) )
+Space Complexity: O(n*S)
 
+Code:
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+int SubsetSum(int *a, int S, int n)
+{
+	int Matrix[n+1][S+1];
+	int ind1, ind2;
+	for( ind1 = 0 ; ind1 <= n ; Matrix[ind1++][0] = 1 );
+	for( ind1 = 1 ; ind1 <= S ; Matrix[0][ind1++] = 0 );
+	for( ind1 = 1 ; ind1 <= n ; ind1++ )
+		for( ind2 = 1 ; ind2 <= S ; ind2++ )
+			if( a[ind1] <= ind2 )
+				Matrix[ind1][ind2] = Matrix[ind1-1][ind2-a[ind1]] || Matrix[ind1-1][ind2];
+			else
+				Matrix[ind1][ind2] = Matrix[ind1-1][ind2];
+	return Matrix[n][S];
+}
+int main()
+{
+	int number, *array, Sum, index, result;
+	cin >> number >> Sum;
+	array = (int*)malloc(sizeof(int)*(number+1));
+	for( index = 1 ; index <= number ; index++ )
+		scanf("%d", &array[index]);
+	result = SubsetSum(array,Sum,number);
+	result == 1 ? printf("SUM IS POSSIBLE WITH GIVEN SET") : printf("SUM IS NOT POSSIBLE WITH GIVEN SET") ;
+	return 0;
+}
 
 
 
