@@ -283,7 +283,62 @@ int main()
 	return 0;
 }
 
-
+5.Maximum Sum Sub Array	: 	DP solution(Kadane's Algorithm)
+Kadane's Algorithm : keywords ( currSum, maxSumSoFar, don't carry negative sum )
+Maintain two variables currSum, maxSumSoFar
+Do not carry a negative value to next number in currSum
+Time Complexity : O(n)
+Space Complexity: O(1)
+Code:
+#include<stdio.h>
+#include<limits.h>
+void printSolution(int num, int *arr, int maxSum, int end)
+{
+	int start, index, sum;
+	for( index = end ; index >= 0 ; index-- )
+	{
+		sum = sum + arr[index];
+		if( sum == maxSum )
+			break;
+	}
+	start = index;
+	for( index = start ; index <= end ; printf("%d ", arr[index++]));
+}
+int kadane(int num, int *arr)
+{
+	int currSum, maxSumSoFar, minSum, endIndex, index;
+	currSum = maxSumSoFar = 0;
+	endIndex = -1;
+	minSum = INT_MIN;
+	for( index = 0 ; index < num ; index++ )
+	{
+		if( arr[index] < 0 )
+		{
+			if( arr[index] > minSum )
+				minSum = arr[index];
+		}
+		currSum = currSum + arr[index];
+		if( currSum > maxSumSoFar )
+		{
+			maxSumSoFar = currSum;
+			endIndex = index;
+		}
+		currSum = currSum < 0 ? 0 : currSum;
+	}
+//	printSolution(num,arr,maxSumSoFar,endIndex);
+	return maxSumSoFar == 0 ? minSum : maxSumSoFar ;
+}
+int main()
+{
+	int number, *array, index, maxSum;
+	scanf("%d", &number);
+	array = (int*)malloc(sizeof(int)*number);
+	for( index = 0 ; index < number ; index++ )
+		scanf("%d", &array[index]);
+	maxSum = kadane( number,array);
+	printf("\nMAXIMUM SUM OF SUB ARRAY  :  %d", maxSum);
+	return 0;
+}
 
 
 
