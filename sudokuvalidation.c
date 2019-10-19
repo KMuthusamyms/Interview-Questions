@@ -31,7 +31,7 @@ int main()
 	{
 		flag=0;
 		for(ind2=0;ind2<N;ind2++)
-			flag = flag | ( 1 << sudoku[ind1][ind2] - 1 );
+			flag = flag | ( 1 << sudoku[ind2][ind1] - 1 );
 		if(flag!=511)
 		{
 			printf("Sudoku is incorrect");
