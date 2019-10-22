@@ -506,6 +506,121 @@ int main()
 
 
 10.Coin Change problem	:	DP Solution
+Similar to subsetsum problem but the coins have infinite supply
+Time Complexity : min( O(2^n), O(n*k) )
+Space Complexity: O(n*k)
+Code:
+#include<stdio.h>
+#include<stdlib.h>
+int CoinChange(int num, int *arr, int K)
+{
+	int SS[num+1][K+1], ind1, ind2;
+	for( ind1 = 0 ; ind1 <= num ; SS[ind1++][0] = 1 );
+	for( ind1 = 1 ; ind1 <= K ; SS[0][ind1++] = 0 );
+	for( ind1 = 1 ; ind1 <= num ; ind1++ )
+	{
+		for( ind2 = 1 ; ind2 <= K ; ind2++ )
+			if( arr[ind1-1] <= ind2 )
+				SS[ind1][ind2] = SS[ind1][ind2-arr[ind1-1]] + SS[ind1-1][ind2];
+			else
+				SS[ind1][ind2] = SS[ind1-1][ind2];
+	}
+	return SS[num][K];
+}
+int main()
+{
+	int number, *array, index, Ways, amount;
+	scanf("%d", &number);
+	array = (int*)malloc(sizeof(int)*number);
+	for( index = 0 ; index < number ; index++ )
+		scanf("%d", &array[index]);
+	scanf("%d", &amount);
+	Ways = CoinChange(number, array, amount);
+	printf("Number of Ways = %d", Ways);
+	return 0;
+}
+
+
+11.Unbounded Knapsack (Hacker Rank)	:	DP Solution
+Code:	(Something is wrong when done in hackerrank)
+/*Knapsack 
+Given an array of integers and a target sum, determine the sum nearest to but not exceeding the target that can be
+created. To create the sum, use any element of your array zero or more times.
+For example, if and your target sum is , you might select or . In
+this case, you can arrive at exactly the target.
+Function Description
+Complete the unboundedKnapsack function in the editor below. It must return an integer that represents the sum nearest
+to without exceeding the target value.
+unboundedKnapsack has the following parameter(s):
+k: an integer
+arr: an array of integers
+Input Format
+The first line contains an integer , the number of test cases.
+Each of the next pairs of lines are as follows:
+- The first line contains two integers and , the length of and the target sum.
+- The second line contains space separated integers .
+Constraints
+Output Format
+Print the maximum sum for each test case which is as near as possible, but not exceeding, to the target sum on a
+separate line.
+Sample Input
+2
+3 12
+1 6 9
+5 9
+3 4 4 4 8
+Sample Output
+12
+9
+Explanation
+In the first test case, one can pick {6, 6}. In the second, we can pick {3,3,3}.
+It is similar to 0/1 knapsack whose profits are nothing but weights*/
+#include<stdio.h>
+#include<malloc.h>
+int Unboundedknapsack(int num, int *arr, int k)
+{
+	int KS[num+1][k+1], ind1, ind2;
+	for( ind1 = 0 ; ind1 <= num ; KS[ind1++][0] = 0 );
+	for( ind1 = 1 ; ind1 <= k ; KS[0][ind1++] = 0 );
+	for( ind1 = 1 ; ind1 <= num ; ind1++ )
+	{
+		for( ind2 = 1 ; ind2 <= k ; ind2++ )
+			if( arr[ind1-1] <= ind2 )
+				KS[ind1][ind2] = arr[ind1-1] + KS[ind1][ind2-arr[ind1-1]] > KS[ind1-1][ind2] ? arr[ind1-1] + KS[ind1][ind2-arr[ind1-1]] : KS[ind1-1][ind2] ;
+			else
+				KS[ind1][ind2] = KS[ind1-1][ind2];
+	}		
+	return KS[num][k];
+}
+int main()
+{
+	int number, *array, index, weight, hold;
+	scanf("%d", &number);
+	array = (int*)malloc(sizeof(int)*number);
+	for( index = 0 ; index < number ; index++ )
+		scanf("%d", &array[index]);
+	scanf("%d", &weight);
+	hold = Unboundedknapsack(number,array,weight);
+	printf("The knapsack is holding %d", hold);
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
