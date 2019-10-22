@@ -458,6 +458,82 @@ int main()
 	return 0;
 }
 
+9.Partition Problem	:	DP Solution
+Given an array of elements find out if the array can be divided into two partitions in such a way that sum of both the partitions is 
+equal.
+It is very similiar to subset sum problem
+So here we find sum of entire array and then divide the array into two equal parts.
+So if we can find a subset with half the sum then there exists another subset with remaining half sum
+It is as good as partitioning the array into two equal sum partitions
+Time Complexity : min( O(2^n), O(n*k) )
+Space Complexity: O(n*k)
+
+Code:
+#include<stdio.h>
+#include<malloc.h>
+int SubsetSum(int num, int *arr, int S)
+{
+	int SS[num+1][S+1], ind1, ind2;
+	for( ind1 = 0 ; ind1 <= num ; SS[ind1++][0] = 1 );
+	for( ind1 = 1 ; ind1 <= S ; SS[0][ind1++] = 0 );
+	for( ind1 = 1 ; ind1 <= num ; ind1++ )
+	{
+		for( ind2 = 1 ; ind2 <= S ; ind2++ )
+			if( ind1 <= ind2 )
+				SS[ind1][ind2] = SS[ind1-1][ind2-arr[ind1-1]] || SS[ind1-1][ind2];
+			else
+				SS[ind1][ind2] = SS[ind1-1][ind2];
+	}
+	return SS[num][S];
+}
+int main()
+{
+	int number, *array, index, present = 0, sum;
+	scanf("%d", &number);
+	array = (int*)malloc(sizeof(int)*number);
+	for( index = 0 ; index < number ; index++ )
+		scanf("%d", &array[index]);
+	for( index = 0, sum = 0 ; index < number ; sum = sum + array[index], index++);
+	if( sum % 2 != 0 )
+		printf("Can't be partitioned");
+	else
+	{
+		present = SubsetSum(number, array, sum/2);
+		present == 1 ? printf("can be partitioned") : printf("Can't be partitioned") ;
+	}
+	return 0;
+}
+
+
+10.Coin Change problem	:	DP Solution
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
