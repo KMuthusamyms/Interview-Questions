@@ -665,8 +665,58 @@ int main()
 }
 
 
-
-
+13.K-palindrome		:	DP Solution
+Find whether the string can be made a palindrome by making atmost k deletions
+Note	:	When you find common subsequence between a string and reverse of it then this subsequence should be a palindrome
+and if you find the longest common subsequence then that is the longest palindrome which can be formed with the letters of string.
+Solution:	So, here we find out the length of lcs between string and its reverse and this is the longest palindrome that can 
+be formed with that string and if we remove this length from length of string we get the minimum number of deletions to be made 
+from the string to make it a palindrome and now if the minimum number is <= given threshold of deletions then print YES otherwise 
+print NO.
+Time Complexity : O(n^2)
+Space Complexity: O(n^2)
+Code:
+#include<stdio.h>
+#include<string.h>
+#define MAX 20
+void reverseString(char *str, int start, int end)
+{
+	char temp;
+	for( ; start < end ; start++, end-- )
+	{
+		temp = str[start];
+		str[start] = str[end];
+		str[end] = temp;
+	}
+}
+int LongestCS(char *str1, char *str2, int len1, int len2)
+{
+	int trak[len1+1][len2+1], ind1, ind2;
+	for( ind1 = 0 ; ind1 <= len1 ; trak[ind1++][0] = 0 );
+	for( ind1 = 1 ; ind1 <= len2 ; trak[0][ind1++] = 0 );
+	for( ind1 = 1 ; ind1 <= len1 ; ind1++ )
+	{
+		for( ind2 = 1 ; ind2 <= len2 ; ind2++ )
+			if( str1[ind1-1] == str2[ind2-1] )
+				trak[ind1][ind2] = 1 + trak[ind1-1][ind2-1];
+			else
+				trak[ind1][ind2] = ( trak[ind1-1][ind2] > trak[ind1][ind2-1] )? trak[ind1-1][ind2] : trak[ind1][ind2-1] ;
+	}
+	return trak[len1][len2];
+}
+int main()
+{
+	char string[MAX], reverse[MAX];
+	int k, len, lcsLen;
+	scanf("%s", string);
+	scanf("%d", &k);
+	len = strlen(string);
+	strcpy(reverse,string);
+	reverseString(reverse, 0, len-1);
+	lcsLen = LongestCS(string, reverse, len, len);
+	( len - lcsLen <= k )? printf("YES") : printf("NO") ;
+	return 0;
+}
 
 
 
