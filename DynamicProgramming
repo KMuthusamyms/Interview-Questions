@@ -340,8 +340,123 @@ int main()
 	return 0;
 }
 
+6.Longest Increasing Subsequence	-	DP solution
 
+Approach - 1(Simple)
+Time Compleity : O(n^2)
+Space Complexity:O(n)
+Substructure and Recursion:
+		     | 	1 
+	LIS(i) = max |  1 + LIS (j) ; if a[i] > a[j] && LIS(j) + 1 > LIS(i) ;; where j < i
+Code:
+#include<stdio.h>
+#include<malloc.h>
+int LongestIS(int num, int *arr)
+{
+	int LIS[num], ind1, ind2, maxLen;
+	for( ind1 = 0 ; ind1 < num ; LIS[ind1++] = 1 );
+	for( ind1 = 1 ; ind1 < num ; ind1++ )
+	{
+		for( ind2 = ind1 - 1 ; ind2 >= 0 ; ind2-- )
+		{
+			if( arr[ind1] > arr[ind2] && LIS[ind2] + 1 > LIS[ind1] )
+				LIS[ind1] = LIS[ind2] + 1;
+		}
+	}
+	for( ind1 = 1, maxLen = LIS[0] ; ind1 < num ; ind1++ )
+		if( LIS[ind1] > maxLen )
+			maxLen = LIS[ind1];
+	return maxLen;
+}
+int main()
+{
+	int number, *array, index, Length;
+	scanf("%d", &number);
+	array = (int*)malloc(sizeof(int)*number);
+	for( index = 0 ; index < number ; index++ )
+		scanf("%d", &array[index]);
+	Length = LongestIS(number, array);
+	printf("Length of Longest Increasing SubSequence	:	%d", Length);
+	return 0;
+}
 
+7.Longest Decreasing SubSequence	:	DP Solution
+You can simply apply LIS by reversing the array and it gives you longest decreasing subsequence
+Substructure and Recursion:
+		     | 1 
+	LDS(i) = max | 1 + LDS(j) ; if a[i] < a[j] and LDS(j) + 1 > LDS(i) ;; where j < i
+
+Time Complexity : O(n^2)
+Space Complexity: O(n)
+Code:
+#include<stdio.h>
+#include<malloc.h>
+int LongestDS(int num,int *arr)
+{
+	int ind1, ind2, LDS[num], maxLen;
+	for( ind1 = 0 ; ind1 < num ; LDS[ind1++] = 1 );
+	for( ind1 = 1 ; ind1 < num ; ind1++ )
+	{
+		for( ind2 = ind1 - 1 ; ind2 >= 0 ; ind2-- )
+		{
+			if( arr[ind1] < arr[ind2] && LDS[ind1] < LDS[ind2] + 1 )
+				LDS[ind1] = LDS[ind2] + 1;
+		}
+	}
+	for( ind1 = 1, maxLen = LDS[0] ; ind1 < num ; ind1++ )
+		if( LDS[ind1] > maxLen )
+			maxLen = LDS[ind1];
+	return maxLen;
+}
+int main()
+{
+	int number, *array, index, length;
+	scanf("%d", &number);
+	array = (int*)malloc(sizeof(int)*number);
+	for( index = 0 ; index < number ; index++ )
+		scanf("%d", &array[index]);
+	length = LongestDS(number, array);
+	printf("\nLength of Longest Decreasing Subsequence is : %d", length);
+	return 0;
+}
+
+8.Maximum Sum Increasing SubSequence	:	DP Solution
+Time Complexity : O(n^2)
+Space Complexity: O(n)
+Substructure and Recursion:
+				      | a[i] ;
+			MSIS(i) = max | a[i] + MSIS(j) ; if a[i] > a[j] && MSIS[i] < MSIS[j] + a[i] ;; where j < i
+Code:
+#include<stdio.h>
+#include<malloc.h>
+int MaximumSumIS(int num, int *arr)
+{
+	int ind1, ind2, MSIS[num], maxSum;
+	for( ind1 = 0 ; ind1 < num ; MSIS[ind1] = arr[ind1], ind1++ );
+	for( ind1 = 1 ; ind1 < num ; ind1++ )
+	{
+		for( ind2 = ind1 - 1 ; ind2 >= 0 ; ind2-- )
+		{
+			if( arr[ind1] > arr[ind2] && MSIS[ind2] + arr[ind1] > MSIS[ind1] )
+				MSIS[ind1] = MSIS[ind2] + arr[ind1];
+		}
+	}
+	for( ind1 = 1, maxSum = MSIS[0] ; ind1 < num ; ind1++ )
+		if( MSIS[ind1] > maxSum )
+			maxSum = MSIS[ind1];
+	return maxSum;
+}
+int main()
+{
+	int number, *array, index, Sum;
+	scanf("%d", &number);
+	array = (int*)malloc(sizeof(int)*number);
+	for( index = 0 ; index < number ; index++ )
+		scanf("%d", &array[index]);
+	Sum = MaximumSumIS(number, array);
+	printf("Maximum Sum in an Increasing Subsequence is : %d", Sum);
+	return 0;
+}
 
 
 
