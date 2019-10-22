@@ -606,7 +606,63 @@ int main()
 }
 
 
-
+12.Longest Palindromic SubString	:	Effective Solution Not DP
+We go to every character and check whether it can be the centre of a palindrome
+Palindromes will be of two length i:e even length palindromes and odd length palindromes
+even length palindromes : aa, baab, abssba
+odd length palindromes : aba, anbna
+Time Complexity : O(n^2)
+Space Complexity: O(1)
+Code:
+#include<stdio.h>
+#include<string.h>
+#define MAX 20
+int* LongestPS(char *str, int *arr)
+{
+	int ind, low, high, start, len, maxLen = 0;
+	len = strlen(str);
+	for( ind = 1 ; str[ind] ; ind++ )
+	{
+		low = ind - 1;
+		high = ind;
+		while( low >= 0 && high < len && str[low] == str[high] )
+		{
+			if( high - low + 1 > maxLen )
+			{
+				maxLen = high - low + 1;
+				start = low;
+			}
+			low = low - 1;
+			high = high + 1;
+		}
+		low = ind - 1;
+		high = ind + 1;
+		while( low >= 0 && high < len && str[low] == str[high] )
+		{
+			if( high - low + 1 > maxLen )
+			{
+				maxLen = high - low + 1;
+				start = low;
+			}
+			low = low - 1;
+			high = high + 1;
+		}
+	}
+	arr[0] = start;
+	arr[1] = maxLen;
+	return arr;
+}
+int main()
+{
+	char string[MAX];
+	int *ptr, ind, trak[2] = { 0, 0 };
+	scanf("%s", string);
+	ptr = LongestPS(string, trak);
+	printf("Maximum length of PS : %d\n", ptr[1]);	// prints length
+	for( ind = ptr[0] ; ind < ptr[0] + ptr[1] ; ind++ )	// prints solution
+		printf("%c", string[ind]);
+	return 0;
+}
 
 
 
