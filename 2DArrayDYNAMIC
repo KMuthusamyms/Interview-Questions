@@ -1,0 +1,21 @@
+Code:
+#include<stdio.h>
+#define MAX 20
+void printMatrix(int num, int (*Matrix)[num])
+{
+	int ind1, ind2;
+	for( ind1 = 0 ; ind1 < num ; printf("\n"), ind1++ )
+		for( ind2 = 0 ; ind2 < num ; ind2++ )
+			printf("%d ",Matrix[ind1][ind2]);
+}
+int main()
+{
+	int num, ind1, ind2;
+	scanf("%d", &num);
+	int Matrix[num][num];
+	for( ind1 = 0 ; ind1 < num ; ind1++ )
+		for( ind2 = 0 ; ind2 < num ; ind2++ )
+			scanf("%d", &Matrix[ind1][ind2]);
+	printMatrix(num,Matrix);
+	return 0;
+}
