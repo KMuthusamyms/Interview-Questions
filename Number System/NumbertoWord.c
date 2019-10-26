@@ -2,44 +2,43 @@
 Range : 0 to 9999
 Code:
 #include<stdio.h>
-#define SIZE 10
-int placeValue(int num)
+#define MAX 15
+int power(int num)
 {
-	int power = 1;
-	while( num / power )
-		power = power * 10;
-	return power / 10;
+	int power10 = 1;
+	while( num / power10 )
+		power10 = power10 * 10;
+	return power10 / 10;
 }
 int main()
 {
-	char ones[][SIZE] = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
-	char tens[][SIZE] = { "ten", "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety"};
-	int number, index, power, digit;
-	scanf("%d",&number);
-	power = placeValue( number );
-	while( number != number / power )
+	char ones[][MAX] = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+	char teen[][MAX] = { "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
+	char tens[][MAX] = { "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
+	int number, power10, digit;
+	scanf("%d", &number);
+	power10 = power(number);
+	while( number / power10 != number )
 	{
-		digit = ( number / power ) % 10;
-		if ( digit != 0 && power == 1000)
-		{
+		digit = ( number / power10 ) % 10;
+		if( power10 == 1000 && digit != 0 )
 			printf("%s thousand ", ones[digit-1]);
-			power = power / 10;
-		}
-		else if( digit != 0 && power == 100)
-		{
+		else if( power10 == 100 && digit != 0 )
 			printf("%s hundred ", ones[digit-1]);
-			power = power / 10;
-		}
-		else if ( digit != 0 && power == 10)
+		else if( power10 == 10 && digit != 0 )
 		{
-			printf("%s ", tens[digit-1]);
-			power = power / 10;
+			if( digit == 1 )
+			{
+				number % 10 != 0 ? printf("%s", teen[(number % 10)-1]) : printf("%s", tens[digit-1]);
+				power10 = 0;
+				break;
+			}
+			else
+				printf("%s ", tens[digit-1]);
 		}
-		else
-			power = power / 10;
-	}
-	digit = number % 10;
-	if( digit != 0 )
-		printf("%s", ones[digit-1]);
+		power10 = power10 / 10;
+	}	
+	if( power10 != 0 )
+		number % 10 != 0 ? printf("%s", ones[number%10 - 1]) : printf("\n") ;
 	return 0;
 }
