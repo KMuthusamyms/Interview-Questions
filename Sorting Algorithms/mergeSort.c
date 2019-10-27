@@ -4,6 +4,8 @@ Space Complexity: O(n) ===== > ( merge procedure - O(n) for global array and for
 Out of place algorithm
 Stable sorting technique as it preserves relative ordering of elements
 best case = worst case => Average case
+uses divide and conquer
+extra space includes an array and as well as recursion stack
 */
 #include<stdio.h>
 #include<stdlib.h>
