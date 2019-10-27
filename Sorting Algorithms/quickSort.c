@@ -2,6 +2,8 @@
 Time Complexity : max( O(nlogn), O(n^2) ) ==> ( pivot divides into two equal lists, pivot divides into an empty and a n-1 list )
 Space Complexity: max( O(logn), O(n) )
 Inplace algorithm
+divide and conquer
+No extra space other than recursion stack
 Unstable sorting technique where relative ordering of elements is altered
 */
 #include<stdio.h>
